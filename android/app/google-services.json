@@ -1,22 +1,21 @@
 {
   "project_info": {
-    "project_number": "169133094745",
-    "firebase_url": "https://remissearequipa-3d9bb-default-rtdb.firebaseio.com",
-    "project_id": "remissearequipa-3d9bb",
-    "storage_bucket": "remissearequipa-3d9bb.appspot.com"
+    "project_number": "1042800475058",
+    "project_id": "remisseaqp-dfd32",
+    "storage_bucket": "remisseaqp-dfd32.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:169133094745:android:71a66f2737b34ff8ea3e48",
+        "mobilesdk_app_id": "1:1042800475058:android:9c177999cdc49ebc1982ab",
         "android_client_info": {
-          "package_name": "com.example.remisse_arequipa"
+          "package_name": "com.jamir.remisseaqp"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD0npzjSKrPBTqhykfWi9nUp9pKIt3Msxw"
+          "current_key": "AIzaSyCgcWDPD0RL8qMdGobrvmsCBLKTRRxZpO0"
         }
       ],
       "services": {
