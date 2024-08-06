@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:remisse_arequipa/authentication/login_screen.dart';
 import 'package:remisse_arequipa/firebase_options.dart';
+//test
 import 'package:remisse_arequipa/pages/home_page.dart';
 
 void main() async {
