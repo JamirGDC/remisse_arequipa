@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ProfileUsers extends StatefulWidget {
-  const ProfileUsers({Key? key}) : super(key: key);
+  const ProfileUsers({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProfileUsersState createState() => _ProfileUsersState();
 }
 
@@ -29,7 +30,7 @@ class _ProfileUsersState extends State<ProfileUsers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile Users'),
+        backgroundColor: Colors.orange,
       ),
       body: Container(
         color: Colors.orange, // Fondo naranja para todo el body
@@ -37,21 +38,26 @@ class _ProfileUsersState extends State<ProfileUsers> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Megan Fox',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white, // Texto en blanco para contrastar con el fondo naranja
+              const Padding(
+                padding: EdgeInsets.only(top: 70.0), // Ajusta el padding según sea necesario
+
+                child: Text(
+                  'Megan fox',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white, 
+                   
+                  ),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
               const CircleAvatar(
                 radius: 50,
                 backgroundColor: Colors.orange, // Fondo naranja para el avatar
                 backgroundImage: AssetImage('lib/assets/MeganProfile.jpg'),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 90),
               Expanded(
                 child: Container(
                   width: double.infinity,
@@ -65,7 +71,7 @@ class _ProfileUsersState extends State<ProfileUsers> {
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,7 +141,7 @@ class _ProfileUsersState extends State<ProfileUsers> {
                             },
                           ),
                           const Divider(color: Colors.grey),
-                          // Agrega más secciones si es necesario...
+                          
                         ],
                       ),
                     ),
@@ -187,9 +193,3 @@ class _ProfileUsersState extends State<ProfileUsers> {
     );
   }
 }
-
-
-
-
-
-
