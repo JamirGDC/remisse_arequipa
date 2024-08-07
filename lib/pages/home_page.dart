@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:remisse_arequipa/global.dart';
 
@@ -15,6 +16,22 @@ class _HomePageState extends State<HomePage>
   double bottomMapPadding = 0;
   final Completer<GoogleMapController> googleMapCompleterController = Completer<GoogleMapController>();
   GoogleMapController? controllerGoogleMap;
+  Position? currentPositionUser;
+
+  getCurrentLocation() async
+  {
+    Position userPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
+
+    currentPositionUser = userPosition;
+
+    LatLng userLatLng = LatLng(currentPositionUser!.latitude, currentPositionUser!.longitude);
+
+    CameraPosition positionCamera = CameraPosition(target: userLatLng, zoom: 12);
+
+    controllerGoogleMap!.animateCamera(CameraUpdate.newCameraPosition(positionCamera));
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +44,8 @@ class _HomePageState extends State<HomePage>
         {
           controllerGoogleMap = mapController;
           googleMapCompleterController.complete(controllerGoogleMap);
+
+          getCurrentLocation();
         },
     ));
   }
