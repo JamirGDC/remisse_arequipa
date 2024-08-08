@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_field/phone_number.dart';
 
 class ProfileUsers extends StatefulWidget {
   const ProfileUsers({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _ProfileUsersState createState() => _ProfileUsersState();
 }
 
@@ -19,18 +20,20 @@ class _ProfileUsersState extends State<ProfileUsers> {
       TextEditingController(text: '16 de mayo, 1986');
   final TextEditingController emailController =
       TextEditingController(text: 'meganfox@example.com');
-  final TextEditingController phoneController =
-      TextEditingController(text: '+1 234 567 890');
+  final TextEditingController phoneController = TextEditingController();
   final TextEditingController addressController =
       TextEditingController(text: '123 Calle Principal, Ciudad');
   final TextEditingController documentController =
       TextEditingController(text: '12345678');
+
+  String fullPhoneNumber = ''; // Para almacenar el número completo
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,
+        title: const Text('Profile Users'),
       ),
       body: Container(
         color: Colors.orange, // Fondo naranja para todo el body
@@ -39,30 +42,28 @@ class _ProfileUsersState extends State<ProfileUsers> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 70.0), // Ajusta el padding según sea necesario
-
+                padding: EdgeInsets.only(top: 70.0),
                 child: Text(
-                  'Megan fox',
+                  'Megan Fox',
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white, 
-                   
+                    color: Colors.white,
                   ),
                 ),
               ),
               const SizedBox(height: 20),
               const CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.orange, // Fondo naranja para el avatar
+                radius: 80,
+                backgroundColor: Colors.orange,
                 backgroundImage: AssetImage('lib/assets/MeganProfile.jpg'),
               ),
-              const SizedBox(height: 90),
+              const SizedBox(height: 70),
               Expanded(
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.white, // Fondo blanco para el contenedor
+                    color: Colors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(
                           MediaQuery.of(context).size.height * 0.05),
@@ -102,17 +103,49 @@ class _ProfileUsersState extends State<ProfileUsers> {
                             },
                           ),
                           const Divider(color: Colors.grey),
-                          buildEditableListTile(
-                            context,
-                            'Teléfono',
-                            Icons.phone,
-                            phoneController,
-                            isEditingPhone,
-                            () {
-                              setState(() {
-                                isEditingPhone = !isEditingPhone;
-                              });
-                            },
+                          // Implementación de IntlPhoneField para Teléfono
+                          ListTile(
+                            leading: const Icon(Icons.phone, color: Colors.black),
+                            title: isEditingPhone
+                                ? IntlPhoneField(
+                                    controller: phoneController,
+                                    decoration: InputDecoration(
+                                      labelText: 'Número de Teléfono',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                        borderSide: BorderSide(
+                                          color: Colors.orange[900]!,
+                                        ),
+                                      ),
+                                    ),
+                                    initialCountryCode: 'PE',
+                                    onChanged: (PhoneNumber phone) {
+                                      setState(() {
+                                        fullPhoneNumber = phone.completeNumber;
+                                      });
+                                    },
+                                  )
+                                : Text(fullPhoneNumber.isNotEmpty
+                                    ? fullPhoneNumber
+                                    : 'Sin número de teléfono',
+                                    style: const TextStyle(color: Colors.black)),
+                            trailing: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: IconButton(
+                                icon: Icon(
+                                  isEditingPhone ? Icons.check : Icons.edit,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    isEditingPhone = !isEditingPhone;
+                                  });
+                                },
+                              ),
+                            ),
                           ),
                           const Divider(color: Colors.grey),
                           buildEditableListTile(
@@ -141,7 +174,6 @@ class _ProfileUsersState extends State<ProfileUsers> {
                             },
                           ),
                           const Divider(color: Colors.grey),
-                          
                         ],
                       ),
                     ),
