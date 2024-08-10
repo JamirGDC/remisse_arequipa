@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
+import 'package:remisse_arequipa/global.dart'; // Importación del archivo de colores globales
 
 class ProfileUsers extends StatefulWidget {
   const ProfileUsers({super.key});
@@ -32,11 +33,11 @@ class _ProfileUsersState extends State<ProfileUsers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: brandColor, // Uso del color global brandColor
         title: const Text('Profile Users'),
       ),
       body: Container(
-        color: Colors.orange, // Fondo naranja para todo el body
+        color: brandColor, // Uso del color global brandColor
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -48,14 +49,14 @@ class _ProfileUsersState extends State<ProfileUsers> {
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: neutralColor, // Uso del color global neutralColor
                   ),
                 ),
               ),
               const SizedBox(height: 20),
               const CircleAvatar(
                 radius: 80,
-                backgroundColor: Colors.orange,
+                backgroundColor: brandColor, // Uso del color global brandColor
                 backgroundImage: AssetImage('lib/assets/MeganProfile.jpg'),
               ),
               const SizedBox(height: 70),
@@ -63,7 +64,7 @@ class _ProfileUsersState extends State<ProfileUsers> {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: neutralColor, // Uso del color global neutralColor
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(
                           MediaQuery.of(context).size.height * 0.05),
@@ -89,7 +90,7 @@ class _ProfileUsersState extends State<ProfileUsers> {
                               });
                             },
                           ),
-                          const Divider(color: Colors.grey),
+                          const Divider(color: mutedColor), // Uso del color global mutedColor
                           buildEditableListTile(
                             context,
                             'Correo',
@@ -102,10 +103,10 @@ class _ProfileUsersState extends State<ProfileUsers> {
                               });
                             },
                           ),
-                          const Divider(color: Colors.grey),
+                          const Divider(color: mutedColor), // Uso del color global mutedColor
                           // Implementación de IntlPhoneField para Teléfono
                           ListTile(
-                            leading: const Icon(Icons.phone, color: Colors.black),
+                            leading: const Icon(Icons.phone, color: contrastColor), // Uso del color global contrastColor
                             title: isEditingPhone
                                 ? IntlPhoneField(
                                     controller: phoneController,
@@ -116,8 +117,8 @@ class _ProfileUsersState extends State<ProfileUsers> {
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(15.0),
-                                        borderSide: BorderSide(
-                                          color: Colors.orange[900]!,
+                                        borderSide: const BorderSide(
+                                          color: gradienteEndColor, // Uso del color global gradienteEndColor
                                         ),
                                       ),
                                     ),
@@ -131,13 +132,13 @@ class _ProfileUsersState extends State<ProfileUsers> {
                                 : Text(fullPhoneNumber.isNotEmpty
                                     ? fullPhoneNumber
                                     : 'Sin número de teléfono',
-                                    style: const TextStyle(color: Colors.black)),
+                                    style: const TextStyle(color: contrastColor)), // Uso del color global contrastColor
                             trailing: FittedBox(
                               fit: BoxFit.scaleDown,
                               child: IconButton(
                                 icon: Icon(
                                   isEditingPhone ? Icons.check : Icons.edit,
-                                  color: Colors.black,
+                                  color: contrastColor, // Uso del color global contrastColor
                                 ),
                                 onPressed: () {
                                   setState(() {
@@ -147,7 +148,7 @@ class _ProfileUsersState extends State<ProfileUsers> {
                               ),
                             ),
                           ),
-                          const Divider(color: Colors.grey),
+                          const Divider(color: mutedColor), // Uso del color global mutedColor
                           buildEditableListTile(
                             context,
                             'Domicilio',
@@ -160,7 +161,7 @@ class _ProfileUsersState extends State<ProfileUsers> {
                               });
                             },
                           ),
-                          const Divider(color: Colors.grey),
+                          const Divider(color: mutedColor), // Uso del color global mutedColor
                           buildEditableListTile(
                             context,
                             'Documento de Identidad',
@@ -173,7 +174,7 @@ class _ProfileUsersState extends State<ProfileUsers> {
                               });
                             },
                           ),
-                          const Divider(color: Colors.grey),
+                          const Divider(color: mutedColor), // Uso del color global mutedColor
                         ],
                       ),
                     ),
@@ -196,12 +197,12 @@ class _ProfileUsersState extends State<ProfileUsers> {
     VoidCallback onEditPressed,
   ) {
     return ListTile(
-      leading: Icon(icon, color: Colors.black),
+      leading: Icon(icon, color: contrastColor), // Uso del color global contrastColor
       title: isEditing
           ? Flexible(
               child: TextFormField(
                 controller: controller,
-                style: const TextStyle(color: Colors.black),
+                style: const TextStyle(color: contrastColor), // Uso del color global contrastColor
                 maxLines: 1, // Limita el número de líneas para evitar desbordamiento
                 autofocus: true,
                 onFieldSubmitted: (_) {
@@ -211,13 +212,13 @@ class _ProfileUsersState extends State<ProfileUsers> {
                 },
               ),
             )
-          : Text(controller.text, style: const TextStyle(color: Colors.black)),
+          : Text(controller.text, style: const TextStyle(color: contrastColor)), // Uso del color global contrastColor
       trailing: FittedBox(
         fit: BoxFit.scaleDown,
         child: IconButton(
           icon: Icon(
             isEditing ? Icons.check : Icons.edit,
-            color: Colors.black,
+            color: contrastColor, // Uso del color global contrastColor
           ),
           onPressed: onEditPressed,
         ),
