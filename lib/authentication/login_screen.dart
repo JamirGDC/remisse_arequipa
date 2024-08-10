@@ -119,12 +119,12 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              Colors.orange[900] ?? Colors.orange,
-              Colors.orange[400] ?? Colors.orange,
+              gradienteEndColor, // Reemplazado con la variable global gradienteEndColor
+              brandColor, // Reemplazado con la variable global brandColor
             ],
           ),
         ),
@@ -133,17 +133,17 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.all(5),
+              const Padding(
+                padding: EdgeInsets.all(5),
                 child: Column(
                   children: <Widget>[
                     CircleAvatar(
                       radius: 70, // Tamaño del logo redondeado
-                      backgroundColor: Colors.white,
+                      backgroundColor: neutralColor, // Reemplazado con la variable global neutralColor
                       child: Icon(
                         Icons.local_taxi,
                         size: 50,
-                        color: Colors.orange[900], // Icono de taxi en el logo
+                        color: gradienteEndColor, // Reemplazado con la variable global gradienteEndColor
                       ),
                     ),
                   ],
@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 width: double.infinity,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: neutralColor, // Reemplazado con la variable global neutralColor
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(40),
                     topRight: Radius.circular(40),
@@ -170,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: contrastColor, // Reemplazado con la variable global contrastColor
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -182,28 +182,26 @@ class _LoginScreenState extends State<LoginScreen> {
                           keyboardType: TextInputType.emailAddress,
                           style: TextStyle(
                             color: _emailFocusNode.hasFocus
-                                ? Colors.orange[900]
-                                : Colors.black,
+                                ? gradienteEndColor // Reemplazado con la variable global gradienteEndColor
+                                : contrastColor, // Reemplazado con la variable global contrastColor
                           ), // Texto cambia según el foco
                           decoration: InputDecoration(
                             labelText: 'Correo Electrónico',
                             labelStyle: TextStyle(
                               color: _emailFocusNode.hasFocus
-                                  ? Colors.orange[900]
-                                  : Colors.black,
+                                  ? gradienteEndColor // Reemplazado con la variable global gradienteEndColor
+                                  : contrastColor, // Reemplazado con la variable global contrastColor
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
-                              borderSide: BorderSide(
-                                color: Colors.orange[
-                                    900]!, // Color del borde cuando está enfocado
+                              borderSide: const BorderSide(
+                                color: gradienteEndColor, // Reemplazado con la variable global gradienteEndColor
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
                               borderSide: const BorderSide(
-                                color: Colors
-                                    .black, // Color del borde cuando no está enfocado
+                                color: contrastColor, // Reemplazado con la variable global contrastColor
                               ),
                             ),
                           ),
@@ -218,28 +216,26 @@ class _LoginScreenState extends State<LoginScreen> {
                           obscureText: _obscureText,
                           style: TextStyle(
                             color: _passwordFocusNode.hasFocus
-                                ? Colors.orange[900]
-                                : Colors.black,
+                                ? gradienteEndColor // Reemplazado con la variable global gradienteEndColor
+                                : contrastColor, // Reemplazado con la variable global contrastColor
                           ), // Texto cambia según el foco
                           decoration: InputDecoration(
                             labelText: 'Contraseña',
                             labelStyle: TextStyle(
                               color: _passwordFocusNode.hasFocus
-                                  ? Colors.orange[900]
-                                  : Colors.black,
+                                  ? gradienteEndColor // Reemplazado con la variable global gradienteEndColor
+                                  : contrastColor, // Reemplazado con la variable global contrastColor
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
-                              borderSide: BorderSide(
-                                color: Colors.orange[
-                                    900]!, // Color del borde cuando está enfocado
+                              borderSide: const BorderSide(
+                                color: gradienteEndColor, // Reemplazado con la variable global gradienteEndColor
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
                               borderSide: const BorderSide(
-                                color: Colors
-                                    .black, // Color del borde cuando no está enfocado
+                                color: contrastColor, // Reemplazado con la variable global contrastColor
                               ),
                             ),
                             suffixIcon: IconButton(
@@ -248,8 +244,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ? Icons.visibility
                                     : Icons.visibility_off,
                                 color: _passwordFocusNode.hasFocus
-                                    ? Colors.orange[900]
-                                    : Colors.black,
+                                    ? gradienteEndColor // Reemplazado con la variable global gradienteEndColor
+                                    : contrastColor, // Reemplazado con la variable global contrastColor
                               ),
                               onPressed: () {
                                 setState(() {
@@ -267,9 +263,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {
                             // Acción para "Olvide mi contraseña"
                           },
-                          child: Text(
+                          child:const Text(
                             "Olvide mi contraseña",
-                            style: TextStyle(color: Colors.orange[900]),
+                            style: TextStyle(color: brandColor), // Reemplazado con la variable global gradienteEndColor
                           ),
                         ),
                       ),
@@ -287,23 +283,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
                             ),
-                            backgroundColor: const Color.fromARGB(255, 204, 75, 5),
+                            backgroundColor: brandColor, // Reemplazado con la variable global gradienteEndColor
                           ),
                           child: const Text(
                             'Ingresar',
-                            style: TextStyle(color: Colors.white, fontSize: 18),
+                            style: TextStyle(color: neutralColor, fontSize: 18), // Reemplazado con la variable global neutralColor
                           ),
                         ),
                       ),
                       const SizedBox(height: 20),
 
                       // Añadir un separador con "OR"
-                      Row(
+                      const Row(
                         children: <Widget>[
-                          const Expanded(
+                          Expanded(
                             child: Divider(
                               thickness: 1,
-                              color: Colors.grey,
+                              color: mutedColor, // Reemplazado con la variable global mutedColor
                               indent: 30,
                               endIndent: 10,
                             ),
@@ -311,15 +307,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           Text(
                             "OR",
                             style: TextStyle(
-                              color: Colors.grey[700],
+                              color: mutedColor, // Reemplazado con la variable global mutedColor
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const Expanded(
+                          Expanded(
                             child: Divider(
                               thickness: 1,
-                              color: Colors.grey,
+                              color: mutedColor, // Reemplazado con la variable global mutedColor
                               indent: 10,
                               endIndent: 30,
                             ),
@@ -346,10 +342,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),
                               ),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 16, 103, 255),
+                              backgroundColor: acentColor, // Reemplazado con la variable global acentColor
                               side: const BorderSide(
-                                  color: Color.fromARGB(255, 15, 153, 233)),
+                                  color:acentColor),
                               minimumSize: Size(0.4.sw,
                                   0.06.sh), // 40% del ancho y 6% de la altura de la pantalla
                             ),
@@ -362,7 +357,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             label: const Text(
                               'Google',
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 252, 251, 250)),
+                                  color: neutralColor),
                             ),
                           ),
                           SizedBox(
@@ -381,10 +376,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),
                               ),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 15, 14, 14),
+                              backgroundColor: contrastColor, // Reemplazado con la variable global contrastColor
                               side: const BorderSide(
-                                  color: Color.fromARGB(255, 7, 7, 7)),
+                                  color: contrastColor), // Reemplazado con la variable global contrastColor
                               minimumSize: Size(0.4.sw,
                                   0.06.sh), // 40% del ancho y 6% de la altura de la pantalla
                             ),
@@ -392,7 +386,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Icons.apple,
                               size: 24
                                   .w, // Ajusta el tamaño del icono a proporciones relativas
-                              color: const Color.fromARGB(255, 252, 252, 252),
+                              color: neutralColor, // Reemplazado con la variable global neutralColor
                             ),
                             label: const Text(
                               'Apple',
@@ -411,7 +405,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           const Text(
                             "¿No tienes una cuenta?",
                             style: TextStyle(
-                              color: Colors.grey,
+                              color: mutedColor, // Reemplazado con la variable global mutedColor
                               fontSize: 16,
                             ),
                           ),
@@ -422,10 +416,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   MaterialPageRoute(
                                       builder: (c) => const SignupScreen()));
                             },
-                            child: Text(
+                            child: const Text(
                               'Registrarse',
-                              style: TextStyle(
-                                color: Colors.orange[900],
+                              style:TextStyle(
+                                color: brandColor, // Reemplazado con la variable global gradienteEndColor
                                 fontSize: 16,
                               ),
                             ),
