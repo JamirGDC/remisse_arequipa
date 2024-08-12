@@ -35,7 +35,7 @@ TextStyle listTileTextStyle = const TextStyle(
 
 Typography typography = Typography.material2018();
 
-const CameraPosition kGooglePlex = CameraPosition(
-  target: LatLng(37.42796133580664, -122.085749655962),
-  zoom: 14.4746,
-);
+const CameraPosition kArequipa = CameraPosition(
+    target: LatLng(-16.409047, -71.537451),
+    zoom: 14.4746,
+  );

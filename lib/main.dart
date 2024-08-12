@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:remisse_arequipa/authentication/login_screen.dart';
 import 'package:remisse_arequipa/firebase_options.dart';
 import 'package:remisse_arequipa/pages/home_page.dart';
@@ -12,6 +13,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await Permission.locationWhenInUse.isDenied.then((value){
+    if(value){
+      Permission.locationWhenInUse.request();
+    }
+  });
+
   runApp(const MyApp());
 }
 
