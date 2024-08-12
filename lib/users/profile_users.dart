@@ -34,7 +34,7 @@ class _ProfileUsersState extends State<ProfileUsers> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: brandColor, // Uso del color global brandColor
-        title: const Text('Profile Users'),
+        title: const Text('Perfil de usuario', style: TextStyle(color: Colors.white)), // Color del texto
       ),
       body: GestureDetector(
         onTap: () {
