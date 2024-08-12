@@ -123,8 +123,8 @@ class _LoginScreenState extends State<LoginScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              gradienteEndColor, // Reemplazado con la variable global gradienteEndColor
-              brandColor, // Reemplazado con la variable global brandColor
+              brandColor, // Reemplazado con la variable global gradienteEndColor
+              gradienteEndColor, // Reemplazado con la variable global brandColor
             ],
           ),
         ),
@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
             children: <Widget>[
               const SizedBox(height: 30),
               const Padding(
-                padding: EdgeInsets.all(5),
+               padding: EdgeInsets.only(top: 70.0),
                 child: Column(
                   children: <Widget>[
                     CircleAvatar(
@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Icon(
                         Icons.local_taxi,
                         size: 50,
-                        color: gradienteEndColor, // Reemplazado con la variable global gradienteEndColor
+                        color: brandColor, // Reemplazado con la variable global gradienteEndColor
                       ),
                     ),
                   ],
@@ -182,20 +182,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           keyboardType: TextInputType.emailAddress,
                           style: TextStyle(
                             color: _emailFocusNode.hasFocus
-                                ? gradienteEndColor // Reemplazado con la variable global gradienteEndColor
+                                ? brandColor // Reemplazado con la variable global gradienteEndColor
                                 : contrastColor, // Reemplazado con la variable global contrastColor
                           ), // Texto cambia según el foco
                           decoration: InputDecoration(
                             labelText: 'Correo Electrónico',
                             labelStyle: TextStyle(
                               color: _emailFocusNode.hasFocus
-                                  ? gradienteEndColor // Reemplazado con la variable global gradienteEndColor
+                                  ? brandColor 
                                   : contrastColor, // Reemplazado con la variable global contrastColor
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
                               borderSide: const BorderSide(
-                                color: gradienteEndColor, // Reemplazado con la variable global gradienteEndColor
+                                color: brandColor , // Reemplazado con la variable global gradienteEndColor
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
@@ -216,20 +216,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           obscureText: _obscureText,
                           style: TextStyle(
                             color: _passwordFocusNode.hasFocus
-                                ? gradienteEndColor // Reemplazado con la variable global gradienteEndColor
+                                ? brandColor  // Reemplazado con la variable global gradienteEndColor
                                 : contrastColor, // Reemplazado con la variable global contrastColor
                           ), // Texto cambia según el foco
                           decoration: InputDecoration(
                             labelText: 'Contraseña',
                             labelStyle: TextStyle(
                               color: _passwordFocusNode.hasFocus
-                                  ? gradienteEndColor // Reemplazado con la variable global gradienteEndColor
+                                  ? brandColor  // Reemplazado con la variable global gradienteEndColor
                                   : contrastColor, // Reemplazado con la variable global contrastColor
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
                               borderSide: const BorderSide(
-                                color: gradienteEndColor, // Reemplazado con la variable global gradienteEndColor
+                                color: brandColor , // Reemplazado con la variable global gradienteEndColor
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
@@ -244,7 +244,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ? Icons.visibility
                                     : Icons.visibility_off,
                                 color: _passwordFocusNode.hasFocus
-                                    ? gradienteEndColor // Reemplazado con la variable global gradienteEndColor
+                                    ? brandColor  // Reemplazado con la variable global gradienteEndColor
                                     : contrastColor, // Reemplazado con la variable global contrastColor
                               ),
                               onPressed: () {

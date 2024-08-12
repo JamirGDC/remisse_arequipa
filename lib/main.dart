@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:remisse_arequipa/authentication/login_screen.dart';
 import 'package:remisse_arequipa/firebase_options.dart';
 import 'package:remisse_arequipa/pages/home_page.dart';
-//import 'package:remisse_arequipa/users/Profile_Users.dart';
+import 'package:remisse_arequipa/users/Profile_Users.dart';
+//import 'package:remisse_arequipa/authentication/signup_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
         useMaterial3: true,
       ),
-      home: const LoginScreen(), //cambiar a AuthWrapper o vista que quieras mostrar
+      home: const ProfileUsers(), //cambiar a AuthWrapper o vista que quieras mostrar
     );
   }
 }

@@ -36,35 +36,53 @@ class _ProfileUsersState extends State<ProfileUsers> {
         backgroundColor: brandColor, // Uso del color global brandColor
         title: const Text('Profile Users'),
       ),
-      body: Container(
-        color: brandColor, // Uso del color global brandColor
-        child: Center(
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus(); // Ocultar teclado
+        },
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [brandColor, gradienteEndColor], // Gradiente para el body
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 70.0),
+                padding: EdgeInsets.only(top: 10.0),
                 child: Text(
                   'Megan Fox',
                   style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: neutralColor, // Uso del color global neutralColor
+                    color: Colors.white, // Color del texto
                   ),
                 ),
               ),
               const SizedBox(height: 20),
-              const CircleAvatar(
-                radius: 80,
-                backgroundColor: brandColor, // Uso del color global brandColor
-                backgroundImage: AssetImage('lib/assets/MeganProfile.jpg'),
+              Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [brandColor, gradienteEndColor],  // Gradiente detrás del avatar
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+                child: const CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.transparent, // Fondo transparente para mostrar el gradiente
+                  backgroundImage: AssetImage('lib/assets/MeganProfile.jpg'),
+                ),
               ),
-              const SizedBox(height: 70),
-              Expanded(
+              const SizedBox(height: 20),
+              Expanded(  // Asegura que el contenedor blanco ocupe todo el espacio restante
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: neutralColor, // Uso del color global neutralColor
+                    color: neutralColor, // Contenedor blanco
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(
                           MediaQuery.of(context).size.height * 0.05),
@@ -73,8 +91,8 @@ class _ProfileUsersState extends State<ProfileUsers> {
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: SingleChildScrollView(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: SingleChildScrollView(  // Solo el contenido dentro del contenedor blanco es desplazable
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -90,7 +108,7 @@ class _ProfileUsersState extends State<ProfileUsers> {
                               });
                             },
                           ),
-                          const Divider(color: mutedColor), // Uso del color global mutedColor
+                          const Divider(color: mutedColor),
                           buildEditableListTile(
                             context,
                             'Correo',
@@ -103,10 +121,10 @@ class _ProfileUsersState extends State<ProfileUsers> {
                               });
                             },
                           ),
-                          const Divider(color: mutedColor), // Uso del color global mutedColor
+                          const Divider(color: mutedColor),
                           // Implementación de IntlPhoneField para Teléfono
                           ListTile(
-                            leading: const Icon(Icons.phone, color: contrastColor), // Uso del color global contrastColor
+                            leading: const Icon(Icons.phone, color: contrastColor),
                             title: isEditingPhone
                                 ? IntlPhoneField(
                                     controller: phoneController,
@@ -118,7 +136,7 @@ class _ProfileUsersState extends State<ProfileUsers> {
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(15.0),
                                         borderSide: const BorderSide(
-                                          color: gradienteEndColor, // Uso del color global gradienteEndColor
+                                          color: gradienteEndColor,
                                         ),
                                       ),
                                     ),
@@ -132,13 +150,13 @@ class _ProfileUsersState extends State<ProfileUsers> {
                                 : Text(fullPhoneNumber.isNotEmpty
                                     ? fullPhoneNumber
                                     : 'Sin número de teléfono',
-                                    style: const TextStyle(color: contrastColor)), // Uso del color global contrastColor
+                                    style: const TextStyle(color: contrastColor)),
                             trailing: FittedBox(
                               fit: BoxFit.scaleDown,
                               child: IconButton(
                                 icon: Icon(
                                   isEditingPhone ? Icons.check : Icons.edit,
-                                  color: contrastColor, // Uso del color global contrastColor
+                                  color: contrastColor,
                                 ),
                                 onPressed: () {
                                   setState(() {
@@ -148,7 +166,7 @@ class _ProfileUsersState extends State<ProfileUsers> {
                               ),
                             ),
                           ),
-                          const Divider(color: mutedColor), // Uso del color global mutedColor
+                          const Divider(color: mutedColor),
                           buildEditableListTile(
                             context,
                             'Domicilio',
@@ -161,7 +179,7 @@ class _ProfileUsersState extends State<ProfileUsers> {
                               });
                             },
                           ),
-                          const Divider(color: mutedColor), // Uso del color global mutedColor
+                          const Divider(color: mutedColor),
                           buildEditableListTile(
                             context,
                             'Documento de Identidad',
@@ -174,7 +192,7 @@ class _ProfileUsersState extends State<ProfileUsers> {
                               });
                             },
                           ),
-                          const Divider(color: mutedColor), // Uso del color global mutedColor
+                          const Divider(color: mutedColor),
                         ],
                       ),
                     ),
@@ -197,13 +215,13 @@ class _ProfileUsersState extends State<ProfileUsers> {
     VoidCallback onEditPressed,
   ) {
     return ListTile(
-      leading: Icon(icon, color: contrastColor), // Uso del color global contrastColor
+      leading: Icon(icon, color: contrastColor),
       title: isEditing
           ? Flexible(
               child: TextFormField(
                 controller: controller,
-                style: const TextStyle(color: contrastColor), // Uso del color global contrastColor
-                maxLines: 1, // Limita el número de líneas para evitar desbordamiento
+                style: const TextStyle(color: contrastColor),
+                maxLines: 1,
                 autofocus: true,
                 onFieldSubmitted: (_) {
                   setState(() {
@@ -212,13 +230,13 @@ class _ProfileUsersState extends State<ProfileUsers> {
                 },
               ),
             )
-          : Text(controller.text, style: const TextStyle(color: contrastColor)), // Uso del color global contrastColor
+          : Text(controller.text, style: const TextStyle(color: contrastColor)),
       trailing: FittedBox(
         fit: BoxFit.scaleDown,
         child: IconButton(
           icon: Icon(
             isEditing ? Icons.check : Icons.edit,
-            color: contrastColor, // Uso del color global contrastColor
+            color: contrastColor,
           ),
           onPressed: onEditPressed,
         ),
