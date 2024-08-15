@@ -6,6 +6,7 @@ import 'package:remisse_arequipa/global.dart';
 import 'package:remisse_arequipa/methods/common_methods.dart';
 import 'package:remisse_arequipa/pages/home_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:remisse_arequipa/pages/checklist/checklistpage.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -68,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               if (mounted) {
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (c) => const HomePage()));
+                    MaterialPageRoute(builder: (c) => ChecklistPage()));
               }
             } else {
               FirebaseAuth.instance.signOut();
