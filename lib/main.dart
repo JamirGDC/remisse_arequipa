@@ -8,7 +8,8 @@ import 'package:remisse_arequipa/pages/home_page.dart';
 //import 'package:remisse_arequipa/users/Profile_Users.dart';
 //import 'package:remisse_arequipa/authentication/signup_screen.dart';
 //import 'package:remisse_arequipa/pages/checklist/checklistpage.dart';
-import 'package:remisse_arequipa/pages/checklist/createquestions.dart';
+//import 'package:remisse_arequipa/pages/checklist/createquestions.dart';
+import 'package:remisse_arequipa/driverhompages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
         useMaterial3: true,
       ),
-      home:const LoginScreen(), //cambiar a AuthWrapper o vista que quieras mostrar
+      home: DriverHomePage(), //cambiar a AuthWrapper o vista que quieras mostrar
     );
   }
 }

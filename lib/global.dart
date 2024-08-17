@@ -7,9 +7,6 @@ CommonMethods associateMethods = CommonMethods();
 String userName = "";
 String userPhone = "";
 
-
-
-
 // Colores globales
 const Color brandColor =Color.fromARGB(255, 205, 87, 24); // Color principal utilizado en la app
 const Color neutralColor = Colors.white; // Color de fondo para contenedores, texto y otros elementos
