@@ -7,7 +7,7 @@ import 'package:remisse_arequipa/methods/common_methods.dart';
 import 'package:remisse_arequipa/pages/home_page.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:remisse_arequipa/widgets/loading_dialog.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -21,16 +21,13 @@ class _SignupScreenState extends State<SignupScreen> {
 
   final FocusNode _nameFocusNode = FocusNode();
   final FocusNode _lastNameFocusNode = FocusNode();
-
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
   final FocusNode _confirmPasswordFocusNode = FocusNode();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-
+  final TextEditingController _confirmPasswordController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -47,34 +44,25 @@ class _SignupScreenState extends State<SignupScreen> {
       cMethods.displaysnackbar("Por favor ingrese un Nombre", context);
       return;
     } else if (_lastNameController.text.isEmpty) {
-      cMethods.displaysnackbar(
-          "Por favor ingrese al menos un Apellido", context);
+      cMethods.displaysnackbar("Por favor ingrese al menos un Apellido", context);
       return;
-    } else if (_emailController.text.trim().isEmpty ||
-        !_emailController.text.trim().contains("@")) {
-      cMethods.displaysnackbar(
-          "Por favor ingrese un correo electronico valido", context);
+    } else if (_emailController.text.trim().isEmpty || !_emailController.text.trim().contains("@")) {
+      cMethods.displaysnackbar("Por favor ingrese un correo electronico valido", context);
       return;
     } else if (_phoneController.text.trim().isEmpty) {
-      cMethods.displaysnackbar(
-          "Por favor ingrese un número de teléfono", context);
+      cMethods.displaysnackbar("Por favor ingrese un número de teléfono", context);
       return;
-    } else if (_passwordController.text.trim().isEmpty ||
-        _passwordController.text.trim().length < 6) {
-      cMethods.displaysnackbar(
-          "Por favor ingrese una contraseña de al menos 6 caracteres", context);
+    } else if (_passwordController.text.trim().isEmpty || _passwordController.text.trim().length < 6) {
+      cMethods.displaysnackbar("Por favor ingrese una contraseña de al menos 6 caracteres", context);
       return;
-    } else if (_confirmPasswordController.text.trim().isEmpty ||
-        _confirmPasswordController.text.trim().length < 6) {
+    } else if (_confirmPasswordController.text.trim().isEmpty || _confirmPasswordController.text.trim().length < 6) {
       cMethods.displaysnackbar("Por favor repita la contraseña", context);
       return;
-    } else if (_passwordController.text.trim() !=
-        _confirmPasswordController.text.trim()) {
+    } else if (_passwordController.text.trim() != _confirmPasswordController.text.trim()) {
       cMethods.displaysnackbar("Las contraseñas no coinciden", context);
       return;
     } else if (!_termsAccepted) {
-      cMethods.displaysnackbar(
-          "Por favor acepte los términos y condiciones", context);
+      cMethods.displaysnackbar("Por favor acepte los términos y condiciones", context);
       return;
     } else {
       signUpUserNow(); 
@@ -88,12 +76,11 @@ class _SignupScreenState extends State<SignupScreen> {
               messageText: "espere, porfavor...",
             ));
     try {
-      final User? firebaseUser = (await FirebaseAuth.instance
-              .createUserWithEmailAndPassword(
+      final User? firebaseUser = (await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       ).catchError((onError) {
-        associateMethods.displaysnackbar(onError.toString(), context);
+        cMethods.displaysnackbar(onError.toString(), context);
         throw onError;
       }))
           .user;
@@ -113,53 +100,68 @@ class _SignupScreenState extends State<SignupScreen> {
           .child(firebaseUser.uid)
           .set(userDataMap);
 
-
-        if (mounted) {
-        associateMethods.displaysnackbar("cuenta creada con exito", context);
-        }    
-      } on FirebaseException catch (e) {
+      if (mounted) {
+        cMethods.displaysnackbar("cuenta creada con exito", context);
+      }
+    } on FirebaseException catch (e) {
       FirebaseAuth.instance.signOut();
       final errorMessage = e.message.toString();
 
       if (!mounted) return;
       Navigator.pop(context);
       cMethods.displaysnackbar(errorMessage, context);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (c) => const HomePage()));
-      
-
+      Navigator.push(context, MaterialPageRoute(builder: (c) => const HomePage()));
     }
   }
 
   @override
   void initState() {
     super.initState();
+    _nameFocusNode.addListener(() {
+      setState(() {});
+    });
+    _lastNameFocusNode.addListener(() {
+      setState(() {});
+    });
     _emailFocusNode.addListener(() {
       setState(() {});
     });
     _passwordFocusNode.addListener(() {
       setState(() {});
     });
+    _confirmPasswordFocusNode.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
   void dispose() {
+    _nameFocusNode.dispose();
+    _lastNameFocusNode.dispose();
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
+    _confirmPasswordFocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+
+     ScreenUtil.init(
+      context,
+      designSize: const Size(360, 690), // Tamaño de diseño base
+      minTextAdapt: true,
+      splitScreenMode: true,
+    );
     return Scaffold(
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              Colors.orange[900] ?? Colors.orange,
-              Colors.orange[400] ?? Colors.orange,
+              brandColor, // Reemplazado con la variable global brandColor
+              gradienteEndColor, // Reemplazado con la variable global gradienteEndColor
             ],
           ),
         ),
@@ -168,27 +170,27 @@ class _SignupScreenState extends State<SignupScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(height: 80),
-              Padding(
-                padding: const EdgeInsets.all(20),
+              const Padding(
+                padding: EdgeInsets.all(20),
                 child: Column(
                   children: <Widget>[
                     CircleAvatar(
                       radius: 80, // Tamaño del logo redondeado
-                      backgroundColor: Colors.white,
+                      backgroundColor: neutralColor, // Reemplazado con la variable global neutralColor
                       child: Icon(
                         Icons.local_taxi,
                         size: 50,
-                        color: Colors.orange[900], // Icono de taxi en el logo
+                        color: brandColor, // Reemplazado con la variable global brandColor
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 170),
+               SizedBox(height: 30.h),
               Container(
                 width: double.infinity,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: neutralColor, // Reemplazado con la variable global neutralColor
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(40),
                     topRight: Radius.circular(40),
@@ -205,7 +207,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: contrastColor, // Reemplazado con la variable global contrastColor
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -214,74 +216,66 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: TextField(
                           controller: _nameController,
                           focusNode: _nameFocusNode,
-                          keyboardType: TextInputType.emailAddress,
                           style: TextStyle(
                             color: _nameFocusNode.hasFocus
-                                ? Colors.orange[900]
-                                : Colors.black,
+                                ? brandColor // Reemplazado con la variable global brandColor
+                                : contrastColor, // Reemplazado con la variable global contrastColor
                           ), // Texto cambia según el foco
                           decoration: InputDecoration(
                             labelText: 'Nombre',
                             labelStyle: TextStyle(
                               color: _nameFocusNode.hasFocus
-                                  ? Colors.orange[900]
-                                  : Colors.black,
+                                  ? brandColor // Reemplazado con la variable global brandColor
+                                  : contrastColor, // Reemplazado con la variable global contrastColor
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
-                              borderSide: BorderSide(
-                                color: Colors.orange[
-                                    900]!, // Color del borde cuando está enfocado
+                              borderSide: const BorderSide(
+                                color: brandColor, // Reemplazado con la variable global brandColor
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
                               borderSide: const BorderSide(
-                                color: Colors
-                                    .black, // Color del borde cuando no está enfocado
+                                color: contrastColor, // Reemplazado con la variable global contrastColor
                               ),
                             ),
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 20),
                       SizedBox(
                         width: 400,
                         child: TextField(
                           controller: _lastNameController,
                           focusNode: _lastNameFocusNode,
-                          keyboardType: TextInputType.emailAddress,
                           style: TextStyle(
                             color: _lastNameFocusNode.hasFocus
-                                ? Colors.orange[900]
-                                : Colors.black,
+                                ? brandColor // Reemplazado con la variable global brandColor
+                                : contrastColor, // Reemplazado con la variable global contrastColor
                           ), // Texto cambia según el foco
                           decoration: InputDecoration(
                             labelText: 'Apellidos',
                             labelStyle: TextStyle(
                               color: _lastNameFocusNode.hasFocus
-                                  ? Colors.orange[900]
-                                  : Colors.black,
+                                  ? brandColor // Reemplazado con la variable global brandColor
+                                  : contrastColor, // Reemplazado con la variable global contrastColor
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
-                              borderSide: BorderSide(
-                                color: Colors.orange[
-                                    900]!, // Color del borde cuando está enfocado
+                              borderSide: const BorderSide(
+                                color: brandColor, // Reemplazado con la variable global brandColor
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
                               borderSide: const BorderSide(
-                                color: Colors
-                                    .black, // Color del borde cuando no está enfocado
+                                color: contrastColor, // Reemplazado con la variable global contrastColor
                               ),
                             ),
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 20),
                       SizedBox(
                         width: 400,
@@ -291,34 +285,31 @@ class _SignupScreenState extends State<SignupScreen> {
                           keyboardType: TextInputType.emailAddress,
                           style: TextStyle(
                             color: _emailFocusNode.hasFocus
-                                ? Colors.orange[900]
-                                : Colors.black,
+                                ? brandColor // Reemplazado con la variable global brandColor
+                                : contrastColor, // Reemplazado con la variable global contrastColor
                           ), // Texto cambia según el foco
                           decoration: InputDecoration(
                             labelText: 'Correo Electrónico',
                             labelStyle: TextStyle(
                               color: _emailFocusNode.hasFocus
-                                  ? Colors.orange[900]
-                                  : Colors.black,
+                                  ? brandColor // Reemplazado con la variable global brandColor
+                                  : contrastColor, // Reemplazado con la variable global contrastColor
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
-                              borderSide: BorderSide(
-                                color: Colors.orange[
-                                    900]!, // Color del borde cuando está enfocado
+                              borderSide: const BorderSide(
+                                color: brandColor, // Reemplazado con la variable global brandColor
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
                               borderSide: const BorderSide(
-                                color: Colors
-                                    .black, // Color del borde cuando no está enfocado
+                                color: contrastColor, // Reemplazado con la variable global contrastColor
                               ),
                             ),
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 20),
                       SizedBox(
                         width: 400, // Establece el ancho máximo a 400 píxeles
@@ -331,8 +322,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
-                              borderSide: BorderSide(
-                                color: Colors.orange[900]!,
+                              borderSide: const BorderSide(
+                                color: brandColor, // Reemplazado con la variable global brandColor
                               ),
                             ),
                           ),
@@ -342,7 +333,6 @@ class _SignupScreenState extends State<SignupScreen> {
                           },
                         ),
                       ),
-
                       const SizedBox(height: 20),
                       SizedBox(
                         width: 400,
@@ -352,28 +342,26 @@ class _SignupScreenState extends State<SignupScreen> {
                           obscureText: _obscureText,
                           style: TextStyle(
                             color: _passwordFocusNode.hasFocus
-                                ? Colors.orange[900]
-                                : Colors.black,
+                                ? brandColor // Reemplazado con la variable global brandColor
+                                : contrastColor, // Reemplazado con la variable global contrastColor
                           ), // Texto cambia según el foco
                           decoration: InputDecoration(
                             labelText: 'Contraseña',
                             labelStyle: TextStyle(
                               color: _passwordFocusNode.hasFocus
-                                  ? Colors.orange[900]
-                                  : Colors.black,
+                                  ? brandColor // Reemplazado con la variable global brandColor
+                                  : contrastColor, // Reemplazado con la variable global contrastColor
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
-                              borderSide: BorderSide(
-                                color: Colors.orange[
-                                    900]!, // Color del borde cuando está enfocado
+                              borderSide: const BorderSide(
+                                color: brandColor, // Reemplazado con la variable global brandColor
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
                               borderSide: const BorderSide(
-                                color: Colors
-                                    .black, // Color del borde cuando no está enfocado
+                                color: contrastColor, // Reemplazado con la variable global contrastColor
                               ),
                             ),
                             suffixIcon: IconButton(
@@ -382,8 +370,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ? Icons.visibility
                                     : Icons.visibility_off,
                                 color: _passwordFocusNode.hasFocus
-                                    ? Colors.orange[900]
-                                    : Colors.black,
+                                    ? brandColor // Reemplazado con la variable global brandColor
+                                    : contrastColor, // Reemplazado con la variable global contrastColor
                               ),
                               onPressed: () {
                                 setState(() {
@@ -394,7 +382,6 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 20),
                       SizedBox(
                         width: 400,
@@ -404,28 +391,26 @@ class _SignupScreenState extends State<SignupScreen> {
                           obscureText: _obscureText,
                           style: TextStyle(
                             color: _confirmPasswordFocusNode.hasFocus
-                                ? Colors.orange[900]
-                                : Colors.black,
+                                ? brandColor // Reemplazado con la variable global brandColor
+                                : contrastColor, // Reemplazado con la variable global contrastColor
                           ), // Texto cambia según el foco
                           decoration: InputDecoration(
                             labelText: 'Repetir Contraseña',
                             labelStyle: TextStyle(
                               color: _confirmPasswordFocusNode.hasFocus
-                                  ? Colors.orange[900]
-                                  : Colors.black,
+                                  ? brandColor // Reemplazado con la variable global brandColor
+                                  : contrastColor, // Reemplazado con la variable global contrastColor
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
-                              borderSide: BorderSide(
-                                color: Colors.orange[
-                                    900]!, // Color del borde cuando está enfocado
+                              borderSide: const BorderSide(
+                                color: brandColor, // Reemplazado con la variable global brandColor
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
                               borderSide: const BorderSide(
-                                color: Colors
-                                    .black, // Color del borde cuando no está enfocado
+                                color: contrastColor, // Reemplazado con la variable global contrastColor
                               ),
                             ),
                             suffixIcon: IconButton(
@@ -434,8 +419,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ? Icons.visibility
                                     : Icons.visibility_off,
                                 color: _confirmPasswordFocusNode.hasFocus
-                                    ? Colors.orange[900]
-                                    : Colors.black,
+                                    ? brandColor // Reemplazado con la variable global brandColor
+                                    : contrastColor, // Reemplazado con la variable global contrastColor
                               ),
                               onPressed: () {
                                 setState(() {
@@ -451,8 +436,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Checkbox(
-                            value:
-                                _termsAccepted, // Esto debe ser una variable booleana en tu clase State
+                            value: _termsAccepted,
                             onChanged: (bool? value) {
                               setState(() {
                                 _termsAccepted = value ?? false;
@@ -463,10 +447,10 @@ class _SignupScreenState extends State<SignupScreen> {
                             onTap: () {
                               // Navega a una pantalla o muestra un diálogo con los términos y condiciones
                             },
-                            child: Text(
+                            child: const Text(
                               "Aceptar términos y condiciones",
                               style: TextStyle(
-                                color: Colors.orange[900],
+                                color: brandColor, // Reemplazado con la variable global brandColor
                                 decoration: TextDecoration.underline,
                               ),
                             ),
@@ -487,39 +471,39 @@ class _SignupScreenState extends State<SignupScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
                             ),
-                            backgroundColor: Colors.orange[900],
+                            backgroundColor: brandColor, // Reemplazado con la variable global brandColor
                           ),
                           child: const Text(
                             'Registrarse',
-                            style: TextStyle(color: Colors.white, fontSize: 18),
+                            style: TextStyle(color: neutralColor, fontSize: 18), // Reemplazado con la variable global neutralColor
                           ),
                         ),
                       ),
                       const SizedBox(height: 20),
 
                       // Añadir un separador con "OR"
-                      Row(
+                      const Row(
                         children: <Widget>[
-                          const Expanded(
+                          Expanded(
                             child: Divider(
                               thickness: 1,
-                              color: Colors.grey,
+                              color: mutedColor, // Reemplazado con la variable global mutedColor
                               indent: 30,
                               endIndent: 10,
                             ),
                           ),
-                          Text(
+                           Text(
                             "OR",
                             style: TextStyle(
-                              color: Colors.grey[700],
+                              color: mutedColor, // Reemplazado con la variable global mutedColor
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const Expanded(
+                          Expanded(
                             child: Divider(
                               thickness: 1,
-                              color: Colors.grey,
+                              color: mutedColor, // Reemplazado con la variable global mutedColor
                               indent: 10,
                               endIndent: 30,
                             ),
@@ -528,7 +512,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       const SizedBox(height: 20),
 
-                      // Botones de Google y Apple
+                     // Botones de Google y Apple
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -537,48 +522,59 @@ class _SignupScreenState extends State<SignupScreen> {
                               // Acción al presionar el botón de Google
                             },
                             style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 10),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 10
+                                    .w, // Cambia el padding horizontal y vertical a porcentajes
+                                vertical: 10.h,
+                              ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),
                               ),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 16, 103, 255),
+                              backgroundColor: acentColor, // Reemplazado con la variable global acentColor
                               side: const BorderSide(
-                                  color: Color.fromARGB(255, 15, 153, 233)),
-                              minimumSize: const Size(190, 50),
+                                  color:acentColor),
+                              minimumSize: Size(0.4.sw,
+                                  0.06.sh), // 40% del ancho y 6% de la altura de la pantalla
                             ),
                             icon: Image.asset(
                               'lib/assets/google.png',
-                              width: 20,
-                              height: 20,
+                              width: 20
+                                  .w, // Ajusta el tamaño del icono a proporciones relativas
+                              height: 20.h,
                             ),
                             label: const Text(
                               'Google',
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 252, 251, 250)),
+                                  color: neutralColor),
                             ),
                           ),
-                          const SizedBox(width: 20),
+                          SizedBox(
+                              width: 10
+                                  .w), // Cambia el ancho del SizedBox a un valor relativo
                           ElevatedButton.icon(
                             onPressed: () {
                               // Acción al presionar el botón de Apple
                             },
                             style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 10),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 30
+                                    .w, // Cambia el padding horizontal y vertical a porcentajes
+                                vertical: 10.h,
+                              ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),
                               ),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 15, 14, 14),
+                              backgroundColor: contrastColor, // Reemplazado con la variable global contrastColor
                               side: const BorderSide(
-                                  color: Color.fromARGB(255, 7, 7, 7)),
-                              minimumSize: const Size(190, 50),
+                                  color: contrastColor), // Reemplazado con la variable global contrastColor
+                              minimumSize: Size(0.4.sw,
+                                  0.06.sh), // 40% del ancho y 6% de la altura de la pantalla
                             ),
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.apple,
-                              color: Color.fromARGB(255, 252, 252, 252),
+                              size: 24
+                                  .w, // Ajusta el tamaño del icono a proporciones relativas
+                              color: neutralColor, // Reemplazado con la variable global neutralColor
                             ),
                             label: const Text(
                               'Apple',
@@ -588,8 +584,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
-
+                      SizedBox(height: 20.h),
+                      
                       // Texto "Don't have an account?" seguido de un botón "Sign Up"
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -597,21 +593,18 @@ class _SignupScreenState extends State<SignupScreen> {
                           const Text(
                             "¿Ya tienes una cuenta?",
                             style: TextStyle(
-                              color: Colors.grey,
+                              color: mutedColor, // Reemplazado con la variable global mutedColor
                               fontSize: 16,
                             ),
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (c) => const LoginScreen()));
+                              Navigator.push(context, MaterialPageRoute(builder: (c) => const LoginScreen()));
                             },
-                            child: Text(
+                            child: const Text(
                               'Ingresa aquí',
                               style: TextStyle(
-                                color: Colors.orange[900],
+                                color: brandColor, // Reemplazado con la variable global brandColor
                                 fontSize: 16,
                               ),
                             ),
