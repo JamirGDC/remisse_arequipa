@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:remisse_arequipa/methods/common_methods.dart';
@@ -19,7 +20,7 @@ const Color mutedColor= Colors.grey; // Color de las líneas divisorias
 const Color acentColor =Color.fromARGB(255, 16, 103, 255);
 
 
-
+String userID = FirebaseAuth.instance.currentUser!.uid;
 
 
 // Fuentes globales
@@ -39,3 +40,13 @@ const CameraPosition kArequipa = CameraPosition(
     target: LatLng(-16.409047, -71.537451),
     zoom: 14.4746,
   );
+
+String nameDriver = '';
+String photoDriver = '';
+String phoneNumberDriver = '';
+int requestTimeoutDriver = 20;
+String status = '';
+String carDetailsDriver = '';
+String tripStatusDisplay = 'Driver is Arriving';
+
+String googleMapKey = "AIzaSyBpjGzhPhaHA1H4coth-EBvp5qz-ZJsSaM";

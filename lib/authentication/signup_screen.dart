@@ -77,7 +77,7 @@ class _SignupScreenState extends State<SignupScreen> {
           "Por favor acepte los términos y condiciones", context);
       return;
     } else {
-      signUpUserNow();
+      signUpUserNow(); 
     }
   }
 

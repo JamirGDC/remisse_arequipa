@@ -26,6 +26,15 @@ dependencies:
   geolocator: ^12.0.0
   firebase_storage: ^12.1.3
   google_maps_flutter_ios: ^2.12.0
+  http: ^1.2.2
+  provider: ^6.1.2
+  googleapis_auth: ^1.6.0
+  googleapis: ^13.2.0
+  flutter_polyline_points: ^2.1.0
+  flutter_geofire: ^2.0.3
+  restart_app: ^1.2.1
+  loading_animation_widget: ^1.2.1
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:
@@ -39,6 +48,17 @@ flutter:
   assets:
     - lib/assets/google.png
     - lib/assets/MeganProfile.jpg
+    - lib/assets/profileuser.png
+    - lib/assets/avatarman.png
+    - lib/assets/final.png
+    - lib/assets/initial.png
+    - lib/assets/totalearnings.png
+    - lib/assets/totaltrips.png
+    - lib/assets/tracking.png
+    - lib/assets/tripscompleted.png
+    - lib/assets/uberexec.png
+    - lib/assets/night_style.json
+    - lib/assets/logo.png
 
 # The following section is specific to Flutter packages.
 
