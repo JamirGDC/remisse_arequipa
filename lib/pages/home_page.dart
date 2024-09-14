@@ -17,7 +17,6 @@ import 'package:remisse_arequipa/methods/manage_drivers_methods.dart';
 import 'package:remisse_arequipa/methods/push_notification_service.dart';
 import 'package:remisse_arequipa/models/direction_details.dart';
 import 'package:remisse_arequipa/models/online_nearby_drivers.dart';
-import 'package:remisse_arequipa/pages/about_page.dart';
 import 'package:remisse_arequipa/pages/search_destination_page.dart';
 import 'package:remisse_arequipa/pages/trips_history_page.dart';
 import 'package:remisse_arequipa/widgets/info_dialog.dart';
@@ -140,7 +139,7 @@ makeDriverNearbyCarIcon() {
         {
           FirebaseAuth.instance.signOut();
 
-          Navigator.push(context, MaterialPageRoute(builder: (c)=> LoginScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (c)=> const LoginScreen()));
 
           cMethods.displaysnackbar("you are blocked. Contact admin: alizeb875@gmail.com", context);
         }
@@ -148,7 +147,7 @@ makeDriverNearbyCarIcon() {
       else
       {
         FirebaseAuth.instance.signOut();
-        Navigator.push(context, MaterialPageRoute(builder: (c)=> LoginScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (c)=> const LoginScreen()));
       }
     });
   }
@@ -177,7 +176,7 @@ makeDriverNearbyCarIcon() {
     showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (BuildContext context) => LoadingDialog(messageText: "Getting direction..."),
+      builder: (BuildContext context) => const LoadingDialog(messageText: "Getting direction..."),
     );
 
     ///Directions API
@@ -583,7 +582,7 @@ makeDriverNearbyCarIcon() {
 
             resetAppNow();
 
-            Restart.restartApp();
+            //Restart.restartApp();
           }
         }
       }
@@ -1198,7 +1197,7 @@ makeDriverNearbyCarIcon() {
                       children: [
                         Text(
                           tripStatusDisplay,
-                          style: const TextStyle(fontSize: 19, color: Colors.grey,),
+                          style: const TextStyle(fontSize: 30, color: Colors.grey,),
                         ),
                       ],
                     ),
@@ -1219,16 +1218,16 @@ makeDriverNearbyCarIcon() {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
 
-                        ClipOval(
-                          child: Image.network(
-                            photoDriver == ''
-                                ? "https://firebasestorage.googleapis.com/v0/b/remisseaqp-dfd32.appspot.com/o/Images%2Favatarman.png?alt=media&token=264bd97c-ae95-4983-ad19-21d913a4dfda"
-                                : photoDriver,
-                            width: 60,
-                            height: 60,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                        // ClipOval(
+                        //   child: Image.network(
+                        //     photoDriver == ''
+                        //         ? "https://firebasestorage.googleapis.com/v0/b/remisseaqp-dfd32.appspot.com/o/Images%2Favatarman.png?alt=media&token=264bd97c-ae95-4983-ad19-21d913a4dfda"
+                        //         : photoDriver,
+                        //     width: 60,
+                        //     height: 60,
+                        //     fit: BoxFit.cover,
+                        //   ),
+                        // ),
 
                         const SizedBox(width: 8,),
 

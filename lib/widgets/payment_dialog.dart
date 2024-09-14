@@ -41,7 +41,7 @@ class _PaymentDialogState extends State<PaymentDialog>
             const SizedBox(height: 21,),
 
             const Text(
-              "PAY CASH",
+              "Pagar Efectivo",
               style: TextStyle(
                 color: Colors.grey,
               ),
@@ -58,7 +58,7 @@ class _PaymentDialogState extends State<PaymentDialog>
             const SizedBox(height: 16,),
 
             Text(
-              "\$" + widget.fareAmount,
+              "S/.${widget.fareAmount}",
               style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 36,
@@ -71,7 +71,7 @@ class _PaymentDialogState extends State<PaymentDialog>
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                "This is fare amount ( \$ ${widget.fareAmount} ) you have to pay to the driver.",
+                "Tienes que pagar S/. ( ${widget.fareAmount} ) al conductor.",
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: Colors.grey
@@ -90,7 +90,7 @@ class _PaymentDialogState extends State<PaymentDialog>
                 backgroundColor: Colors.green,
               ),
               child: const Text(
-                "PAY CASH",
+                "He pagado",
               ),
             ),
 

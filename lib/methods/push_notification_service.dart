@@ -74,9 +74,9 @@ class PushNotificationService {
         'token':
             deviceToken, // Token of the device you want to send the message/notification to
         'notification': {
-          "title": "NET TRIP REQUEST from $userName",
+          "title": "Nuevo Servicio Solicitado por  $userName",
           "body":
-              "PickUp Location: $pickUpAddress \nDropOff Location: $dropOffDestinationAddress",
+              "Recogida: $pickUpAddress \nDestino: $dropOffDestinationAddress",
         },
         'data': {
           "tripID": tripID,
