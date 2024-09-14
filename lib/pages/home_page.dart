@@ -68,18 +68,22 @@ class _HomePageState extends State<HomePage>
   
   get googlePlexInitialPosition => null;
 
-
-  makeDriverNearbyCarIcon()
-  {
-    if(carIconNearbyDriver == null)
-    {
-      ImageConfiguration configuration = createLocalImageConfiguration(context, size: const Size(0.5, 0.5));
-      BitmapDescriptor.asset(configuration, "lib/assets/tracking.png").then((iconImage)
-      {
-        carIconNearbyDriver = iconImage;
-      });
-    }
+makeDriverNearbyCarIcon() {
+  if (carIconNearbyDriver != null) {
+    return;  // Ya está cargado, no lo cargues de nuevo.
   }
+
+  ImageConfiguration configuration = createLocalImageConfiguration(context, size: const Size(3, 3));
+  BitmapDescriptor.fromAssetImage(configuration, "lib/assets/tracking.png").then((iconImage) {
+    setState(() {
+      carIconNearbyDriver = iconImage;
+    });
+    print("Driver icon loaded successfully");
+  }).catchError((error) {
+    print("Error loading driver icon: $error");
+  });
+}
+
 
   void updateMapTheme(GoogleMapController controller)
   {
@@ -338,36 +342,46 @@ class _HomePageState extends State<HomePage>
     makeTripRequest();
   }
 
-  updateAvailableNearbyOnlineDriversOnMap()
-  {
-    setState(() {
-      markerSet.clear();
-    });
+  updateAvailableNearbyOnlineDriversOnMap() {
+  setState(() {
+    markerSet.clear();
+  });
 
-    Set<Marker> markersTempSet = <Marker>{};
+  Set<Marker> markersTempSet = <Marker>{};
 
-    for(OnlineNearbyDrivers eachOnlineNearbyDriver in ManageDriversMethods.nearbyOnlineDriversList)
-    {
+  print("Number of nearby drivers: ${ManageDriversMethods.nearbyOnlineDriversList.length}");
+
+  for (OnlineNearbyDrivers eachOnlineNearbyDriver in ManageDriversMethods.nearbyOnlineDriversList) {
+    if (eachOnlineNearbyDriver.latDriver != null && eachOnlineNearbyDriver.lngDriver != null) {
       LatLng driverCurrentPosition = LatLng(eachOnlineNearbyDriver.latDriver!, eachOnlineNearbyDriver.lngDriver!);
 
-      Marker driverMarker = Marker(
-        markerId: MarkerId("driver ID = ${eachOnlineNearbyDriver.uidDriver}"),
-        position: driverCurrentPosition,
-        icon: carIconNearbyDriver!,
-      );
+      if (carIconNearbyDriver != null) {
+        Marker driverMarker = Marker(
+          markerId: MarkerId("driver ID = ${eachOnlineNearbyDriver.uidDriver}"),
+          position: driverCurrentPosition,
+          icon: carIconNearbyDriver!,
+        );
 
-      markersTempSet.add(driverMarker);
+        markersTempSet.add(driverMarker);
+      } else {
+        print("Error: carIconNearbyDriver is null");
+      }
+    } else {
+      print("Invalid driver coordinates: ${eachOnlineNearbyDriver.uidDriver}");
     }
-
-    setState(() {
-      markerSet = markersTempSet;
-    });
   }
+
+  setState(() {
+    markerSet = markersTempSet;
+    print("Markers updated on the map");
+  });
+}
+
   
   initializeGeoFireListener()
   {
     Geofire.initialize("onlineDrivers");
-    Geofire.queryAtLocation(currentPositionOfUser!.latitude, currentPositionOfUser!.longitude, 22)!
+    Geofire.queryAtLocation(currentPositionOfUser!.latitude, currentPositionOfUser!.longitude, 30)!
         .listen((driverEvent)
     {
       if(driverEvent != null)
@@ -386,6 +400,8 @@ class _HomePageState extends State<HomePage>
             if(nearbyOnlineDriversKeysLoaded == true)
             {
               //update drivers on google map
+              print("Driver entered: ${driverEvent["key"]}");
+
               updateAvailableNearbyOnlineDriversOnMap();
             }
 
@@ -396,6 +412,8 @@ class _HomePageState extends State<HomePage>
 
             //update drivers on google map
             updateAvailableNearbyOnlineDriversOnMap();
+            print("Driver exited: ${driverEvent["key"]}");
+
 
             break;
 
@@ -521,7 +539,7 @@ class _HomePageState extends State<HomePage>
         {
           //update info for arrived - when driver reach at the pickup point of user
           setState(() {
-            tripStatusDisplay = 'Driver has Arrived';
+            tripStatusDisplay = 'Tu Remisse ha llegado';
           });
         }
         else if(status == "ontrip")
@@ -597,7 +615,7 @@ class _HomePageState extends State<HomePage>
       }
 
       setState(() {
-        tripStatusDisplay = "Driver is Coming - ${directionDetailsPickup.durationTextString}";
+        tripStatusDisplay = "Tu conductor esta en camino - ${directionDetailsPickup.durationTextString}";
       });
 
       requestingDirectionDetailsInfo = false;
@@ -621,7 +639,7 @@ class _HomePageState extends State<HomePage>
       }
 
       setState(() {
-        tripStatusDisplay = "Driving to DropOff Location - ${directionDetailsPickup.durationTextString}";
+        tripStatusDisplay = "Llegando a la ubicación de inicio - ${directionDetailsPickup.durationTextString}";
       });
 
       requestingDirectionDetailsInfo = false;
@@ -634,8 +652,8 @@ class _HomePageState extends State<HomePage>
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => InfoDialog(
-          title: "No Driver Available",
-          description: "No driver found in the nearby location. Please try again shortly.",
+          title: "No hay conductor disponible",
+          description: "No hay conductor disponible en este momento. Por favor, inténtelo de nuevo más tarde.",
         )
     );
   }
@@ -696,42 +714,6 @@ class _HomePageState extends State<HomePage>
 
       const oneTickPerSec = Duration(seconds: 1);
       
-      var timerCountDown = Timer.periodic(oneTickPerSec, (timer)
-      {
-        requestTimeoutDriver = requestTimeoutDriver - 1;
-
-        //when trip request is not requesting means trip request cancelled - stop timer
-        if(stateOfApp != "requesting")
-        {
-          timer.cancel();
-          currentDriverRef.set("cancelled");
-          currentDriverRef.onDisconnect();
-          requestTimeoutDriver = 20;
-        }
-
-        //when trip request is accepted by online nearest available driver
-        currentDriverRef.onValue.listen((dataSnapshot)
-        {
-          if(dataSnapshot.snapshot.value.toString() == "accepted")
-          {
-            timer.cancel();
-            currentDriverRef.onDisconnect();
-            requestTimeoutDriver = 20;
-          }
-        });
-
-        //if 20 seconds passed - send notification to next nearest online available driver
-        if(requestTimeoutDriver == 0)
-        {
-          currentDriverRef.set("timeout");
-          timer.cancel();
-          currentDriverRef.onDisconnect();
-          requestTimeoutDriver = 20;
-
-          //send notification to next nearest online available driver
-          searchDriver();
-        }
-      });
     });
   }
 
@@ -791,7 +773,7 @@ class _HomePageState extends State<HomePage>
                           const SizedBox(height: 4,),
 
                           const Text(
-                            "Profile",
+                            "Perfil",
                             style: TextStyle(
                               color: Colors.white38,
                             ),
@@ -824,21 +806,21 @@ class _HomePageState extends State<HomePage>
                     onPressed: () {},
                     icon: const Icon(Icons.history, color: Colors.grey,),
                   ),
-                  title: const Text("History", style: TextStyle(color: Colors.grey),),
+                  title: const Text("Historial Viajes", style: TextStyle(color: Colors.grey),),
                 ),
               ),
 
               GestureDetector(
                 onTap: ()
                 {
-                  Navigator.push(context, MaterialPageRoute(builder: (c)=> AboutPage()));
+                  //Navigator.push(context, MaterialPageRoute(builder: (c)=> AboutPage()));
                 },
                 child: ListTile(
                   leading: IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.info, color: Colors.grey,),
                   ),
-                  title: const Text("About", style: TextStyle(color: Colors.grey),),
+                  title: const Text("Acerca de", style: TextStyle(color: Colors.grey),),
                 ),
               ),
 
@@ -854,7 +836,7 @@ class _HomePageState extends State<HomePage>
                     onPressed: (){},
                     icon: const Icon(Icons.logout, color: Colors.grey,),
                   ),
-                  title: const Text("Logout", style: TextStyle(color: Colors.grey),),
+                  title: const Text("Desconectarse", style: TextStyle(color: Colors.grey),),
                 ),
               ),
 

@@ -34,12 +34,13 @@ class MyApp extends StatelessWidget
     return ChangeNotifierProvider(
       create: (context) => AppInfo(),
       child: MaterialApp(
-        title: 'Flutter User App',
+        title: 'Remmisse Arequipa',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: Colors.black,
         ),
-        home: FirebaseAuth.instance.currentUser == null ? LoginScreen() : HomePage(),
+         home: FirebaseAuth.instance.currentUser == null ? const LoginScreen() : const HomePage(),
+        //home : const HomePage(),
       ),
     );
   }

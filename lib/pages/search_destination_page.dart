@@ -28,7 +28,7 @@ class _SearchDestinationPageState extends State<SearchDestinationPage>
   {
     if(locationName.length > 1)
     {
-      String apiPlacesUrl = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$locationName&key=$googleMapKey&components=country:es";
+      String apiPlacesUrl = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$locationName&key=$googleMapKey&components=country:pe&location=-16.4090,-71.5375&radius=15000";
 
       var responseFromPlacesAPI = await CommonMethods.sendRequestToAPI(apiPlacesUrl);
 
@@ -97,7 +97,7 @@ class _SearchDestinationPageState extends State<SearchDestinationPage>
 
                           const Center(
                             child: Text(
-                              "Set Dropoff Location",
+                              "Seleccionar Destino",
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -133,7 +133,7 @@ class _SearchDestinationPageState extends State<SearchDestinationPage>
                                 child: TextField(
                                   controller: pickUpTextEditingController,
                                   decoration: const InputDecoration(
-                                    hintText: "Pickup Address",
+                                    hintText: "Dirección de Origen",
                                     fillColor: Colors.white12,
                                     filled: true,
                                     border: InputBorder.none,
@@ -177,7 +177,7 @@ class _SearchDestinationPageState extends State<SearchDestinationPage>
                                     searchLocation(inputText);
                                   },
                                   decoration: const InputDecoration(
-                                      hintText: "Destination Address",
+                                      hintText: "Dirección de Destino",
                                       fillColor: Colors.white12,
                                       filled: true,
                                       border: InputBorder.none,

@@ -23,7 +23,7 @@ class _TripsHistoryPageState extends State<TripsHistoryPage>
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'My Trips History',
+          'Mis Viajes',
           style: TextStyle(
             color: Colors.white,
           ),
