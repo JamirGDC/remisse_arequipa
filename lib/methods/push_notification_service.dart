@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:googleapis_auth/auth_io.dart' as auth;
-import 'package:googleapis/servicecontrol/v1.dart' as servicecontrol;
 import 'package:provider/provider.dart';
 import 'package:remisse_arequipa/global.dart';
 import '../appInfo/app_info.dart';

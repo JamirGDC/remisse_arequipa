@@ -26,7 +26,7 @@ class _PredictionPlaceUIState extends State<PredictionPlaceUI>
     showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (BuildContext context) => LoadingDialog(messageText: "Getting details..."),
+      builder: (BuildContext context) => const LoadingDialog(messageText: "Getting details..."),
     );
 
     String urlPlaceDetailsAPI = "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeID&key=$googleMapKey";

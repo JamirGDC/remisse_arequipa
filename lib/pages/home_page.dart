@@ -194,10 +194,9 @@ makeDriverNearbyCarIcon() {
     polylineCoOrdinates.clear();
     if(latLngPointsFromPickUpToDestination.isNotEmpty)
     {
-      latLngPointsFromPickUpToDestination.forEach((PointLatLng latLngPoint)
-      {
+      for (var latLngPoint in latLngPointsFromPickUpToDestination) {
         polylineCoOrdinates.add(LatLng(latLngPoint.latitude, latLngPoint.longitude));
-      });
+      }
     }
 
     polylineSet.clear();
@@ -659,7 +658,7 @@ makeDriverNearbyCarIcon() {
 
   searchDriver()
   {
-    if(availableNearbyOnlineDriversList!.length == 0)
+    if(availableNearbyOnlineDriversList!.isEmpty)
     {
       cancelRideRequest();
       resetAppNow();
@@ -798,7 +797,7 @@ makeDriverNearbyCarIcon() {
               GestureDetector(
                 onTap: ()
                 {
-                  Navigator.push(context, MaterialPageRoute(builder: (c)=> TripsHistoryPage()));
+                  Navigator.push(context, MaterialPageRoute(builder: (c)=> const TripsHistoryPage()));
                 },
                 child: ListTile(
                   leading: IconButton(
@@ -828,7 +827,7 @@ makeDriverNearbyCarIcon() {
                 {
                   FirebaseAuth.instance.signOut();
 
-                  Navigator.push(context, MaterialPageRoute(builder: (c)=> LoginScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (c)=> const LoginScreen()));
                 },
                 child: ListTile(
                   leading: IconButton(
@@ -917,7 +916,7 @@ makeDriverNearbyCarIcon() {
             left: 0,
             right: 0,
             bottom: -80,
-            child: Container(
+            child: SizedBox(
               height: searchContainerHeight,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -926,7 +925,7 @@ makeDriverNearbyCarIcon() {
                   ElevatedButton(
                     onPressed: () async
                     {
-                      var responseFromSearchPage = await Navigator.push(context, MaterialPageRoute(builder: (c)=> SearchDestinationPage()));
+                      var responseFromSearchPage = await Navigator.push(context, MaterialPageRoute(builder: (c)=> const SearchDestinationPage()));
 
                       if(responseFromSearchPage == "placeSelected")
                       {
